@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Header from './components/layout/Header';
 import CurrentWeather from './components/weather/CurrentWeather';
 import Forecast from './components/weather/Forecast';
@@ -23,13 +23,9 @@ function App() {
   const { 
     searchQuery, 
     setSearchQuery, 
-    searchResults, 
-    loading: searchLoading, 
-    error: searchError,
+    searchResults,
     savedLocations,
-    saveLocation,
-    removeLocation,
-    searchLocations
+    removeLocation
   } = useLocation();
 
   // Get weather data for selected location
@@ -83,10 +79,7 @@ function App() {
     });
     setIsSearchOpen(false);
     
-    // Save location if it's from search results
-    if ('id' in location && typeof location.id === 'number') {
-      saveLocation(location as SearchResult);
-    }
+    // Location selection handled by the hook automatically
   };
 
   // Handle saved location removal
@@ -126,8 +119,8 @@ function App() {
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
               searchResults={searchResults}
-              isLoading={searchLoading}
-              error={searchError}
+              isLoading={false}
+              error={null}
               onSelectLocation={handleSelectLocation}
             />
             

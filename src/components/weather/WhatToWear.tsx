@@ -17,15 +17,7 @@ export interface WhatToWearProps {
   isLoading: boolean;
 }
 
-// Wrapper component for icons to handle TypeScript properly
-interface WeatherIconProps {
-  icon: React.ComponentType<{ className?: string }>;
-  className?: string;
-}
-
-const WeatherIcon: React.FC<WeatherIconProps> = ({ icon: Icon, className = '' }) => {
-  return <Icon className={`w-5 h-5 ${className}`} />;
-};
+// Weather icon component removed as it's not being used
 
 // Animation variants for framer-motion
 const cardVariants = {
