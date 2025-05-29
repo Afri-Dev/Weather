@@ -3,7 +3,7 @@ import Header from './components/layout/Header';
 import CurrentWeather from './components/weather/CurrentWeather';
 import Forecast from './components/weather/Forecast';
 import HourlyForecast from './components/weather/HourlyForecast';
-import WeatherMap from './components/maps/WeatherMap';
+import WhatToWear from './components/weather/WhatToWear';
 import LocationSearch from './components/search/LocationSearch';
 import SavedLocations from './components/search/SavedLocations';
 import useWeather from './hooks/useWeather';
@@ -175,7 +175,7 @@ function App() {
               units={units}
             />
             
-            <WeatherMap 
+            <WhatToWear 
               weatherData={weatherData}
               isLoading={weatherLoading}
             />

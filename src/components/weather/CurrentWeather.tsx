@@ -90,13 +90,21 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = ({
       
       <div className="mt-6 flex items-center">
         <div className="relative">
-          <ImageLoader 
-            src={`https:${current.condition.icon}`} 
-            alt={current.condition.text}
-            className="w-24 h-24 object-contain"
-            width={96}
-            height={96}
-          />
+          {current.condition?.icon ? (
+            <ImageLoader 
+              src={current.condition.icon.startsWith('http') ? current.condition.icon : `https:${current.condition.icon}`}
+              alt={current.condition.text || 'Weather icon'}
+              className="w-24 h-24 object-contain"
+              width={96}
+              height={96}
+            />
+          ) : (
+            <div className="w-24 h-24 flex items-center justify-center bg-gray-200/30 dark:bg-gray-700/30 rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            </div>
+          )}
           <div className="absolute inset-0 bg-gradient-to-br from-transparent to-primary/10 rounded-full mix-blend-overlay"></div>
         </div>
         <div className="ml-4">

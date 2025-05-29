@@ -32,21 +32,38 @@ const ImageLoader: React.FC<ImageLoaderProps> = ({
   
   // Check if we need to use WebP format instead of PNG or JPG
   const optimizedSrc = useMemo(() => {
-    // Only process OpenWeatherMap or WeatherAPI URLs
-    if (src.includes('openweathermap.org')) {
-      // Extract the icon code from the URL
-      const match = src.match(/\/wn\/(.+?)@/);
-      if (match && match[1]) {
-        const iconCode = match[1];
-        // Use WebP format if supported, otherwise fallback to original
-        return `https://openweathermap.org/img/wn/${iconCode}@2x.webp`;
-      }
-    } else if (src.includes('weatherapi.com')) {
-      // For weatherapi.com, also try to use WebP if available
-      return src.replace('.png', '.webp');
-    }
+    if (!src) return '';
     
-    return src;
+    // Handle cases where src might already be a full URL or just the icon code
+    try {
+      // If it's already a full URL
+      if (src.startsWith('http')) {
+        // Process OpenWeatherMap URLs
+        if (src.includes('openweathermap.org')) {
+          // Extract the icon code from the URL
+          const match = src.match(/\/wn\/([a-zA-Z0-9]+)(@[0-9]x)?/);
+          if (match && match[1]) {
+            const iconCode = match[1];
+            // Use WebP format with @2x for better quality on retina displays
+            return `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+          }
+        }
+        // Process WeatherAPI URLs
+        else if (src.includes('weatherapi.com')) {
+          return src.replace('.png', '.webp');
+        }
+        return src;
+      } 
+      // If it's just an icon code (e.g., '01d' or '01n')
+      else if (/^[0-9][0-9][d|n]$/.test(src)) {
+        return `https://openweathermap.org/img/wn/${src}@2x.png`;
+      }
+      
+      return src;
+    } catch (error) {
+      console.error('Error processing image source:', error);
+      return src || '';
+    }
   }, [src]);
 
   useEffect(() => {
