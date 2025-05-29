@@ -8,8 +8,15 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "vercel-build": "vite build"
+    "vercel-build": "vite build",
+    "now-build": "npm run build"
   },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "cacheDirectories": [
+    "node_modules"
+  ],
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "^1.2.2",
