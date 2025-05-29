@@ -1,4 +1,5 @@
 import React from 'react';
+import ImageLoader from '../ui/ImageLoader';
 import { ForecastDay } from '../../lib/types';
 
 interface ForecastProps {
@@ -60,10 +61,12 @@ const Forecast: React.FC<ForecastProps> = ({ forecastDays, isLoading, units }) =
               
               <div className="my-3 flex justify-center">
                 <div className="relative">
-                  <img 
+                  <ImageLoader 
                     src={`https:${day.day.condition.icon}`} 
                     alt={day.day.condition.text}
                     className="w-12 h-12 object-contain"
+                    width={48}
+                    height={48}
                   />
                   <div className="absolute inset-0 bg-gradient-to-br from-transparent to-primary/10 rounded-full mix-blend-overlay"></div>
                 </div>

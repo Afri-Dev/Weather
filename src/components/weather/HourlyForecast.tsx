@@ -1,4 +1,5 @@
 import React from 'react';
+import ImageLoader from '../ui/ImageLoader';
 import { WeatherData } from '../../lib/types';
 
 interface HourlyForecastProps {
@@ -119,10 +120,12 @@ const HourlyForecast: React.FC<HourlyForecastProps> = ({ weatherData, isLoading,
                   
                   <div className="my-3 flex justify-center">
                     <div className="relative">
-                      <img 
+                      <ImageLoader 
                         src={`https:${hour.condition.icon}`} 
                         alt={hour.condition.text}
                         className="w-10 h-10 object-contain"
+                        width={40}
+                        height={40}
                       />
                       <div className="absolute inset-0 bg-gradient-to-br from-transparent to-primary/10 rounded-full mix-blend-overlay"></div>
                     </div>
@@ -161,7 +164,7 @@ const HourlyForecast: React.FC<HourlyForecastProps> = ({ weatherData, isLoading,
       </div>
       
       {/* Add custom styles for hiding scrollbar */}
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
         }
@@ -169,7 +172,7 @@ const HourlyForecast: React.FC<HourlyForecastProps> = ({ weatherData, isLoading,
           -ms-overflow-style: none;
           scrollbar-width: none;
         }
-      `}</style>
+      `}} />
     </div>
   );
 };

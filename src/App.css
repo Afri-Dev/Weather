@@ -19,7 +19,7 @@ body {
   transition: background-color 0.3s ease;
 }
 
-/* Custom animations */
+/* Custom animations - optimized for performance */
 @keyframes float {
   0% {
     transform: translateY(0px);
@@ -34,12 +34,22 @@ body {
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
+  will-change: transform;
 }
 
-/* Weather condition animations */
+/* Add reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float {
+    animation: none;
+    transform: translateY(0);
+  }
+}
+
+/* Weather condition animations - optimized for performance */
 .weather-rain {
   position: relative;
   overflow: hidden;
+  contain: strict;
 }
 
 .weather-rain::before {
@@ -53,6 +63,8 @@ body {
   background-size: 20px 100%;
   animation: rain 1s linear infinite;
   opacity: 0.3;
+  will-change: transform;
+  transform: translateZ(0); /* Force GPU acceleration */
 }
 
 @keyframes rain {
@@ -61,6 +73,14 @@ body {
   }
   100% {
     transform: translateY(50%);
+  }
+}
+
+/* Add reduced motion support for rain animation */
+@media (prefers-reduced-motion: reduce) {
+  .weather-rain::before {
+    animation: none;
+    opacity: 0.1;
   }
 }
 

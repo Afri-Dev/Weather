@@ -1,4 +1,5 @@
 import React from 'react';
+import ImageLoader from '../ui/ImageLoader';
 import { WeatherData } from '../../lib/types';
 
 interface CurrentWeatherProps {
@@ -89,10 +90,12 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = ({
       
       <div className="mt-6 flex items-center">
         <div className="relative">
-          <img 
+          <ImageLoader 
             src={`https:${current.condition.icon}`} 
             alt={current.condition.text}
             className="w-24 h-24 object-contain"
+            width={96}
+            height={96}
           />
           <div className="absolute inset-0 bg-gradient-to-br from-transparent to-primary/10 rounded-full mix-blend-overlay"></div>
         </div>
