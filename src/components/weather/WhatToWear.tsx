@@ -1,19 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { WeatherData } from '../../lib/types';
-import { FiSun, FiMoon, FiDroplet, FiWind, FiThermometer } from 'react-icons/fi';
+import type { WeatherData } from '../../lib/types';
+import { FiSun, FiDroplet, FiThermometer, FiWind } from 'react-icons/fi';
 
-interface ClothingSuggestion {
+// Interfaces
+export interface ClothingSuggestion {
   top: string;
   bottom: string;
   footwear: string;
   accessories?: string[];
 }
 
-interface WhatToWearProps {
+// WhatToWear component props
+export interface WhatToWearProps {
   weatherData: WeatherData | null;
   isLoading: boolean;
 }
+
+// Wrapper component for icons to handle TypeScript properly
+interface WeatherIconProps {
+  icon: React.ComponentType<{ className?: string }>;
+  className?: string;
+}
+
+const WeatherIcon: React.FC<WeatherIconProps> = ({ icon: Icon, className = '' }) => {
+  return <Icon className={`w-5 h-5 ${className}`} />;
+};
 
 // Animation variants for framer-motion
 const cardVariants = {

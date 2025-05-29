@@ -185,8 +185,8 @@ function App() {
       
       <footer className="fixed bottom-0 left-0 right-0 bg-white/10 dark:bg-gray-800/10 backdrop-blur-lg border-t border-gray-200 dark:border-gray-700 py-3">
         <div className="container mx-auto px-4 text-center text-sm text-gray-600 dark:text-gray-400">
-          <p>WeatherVue - A Unique React Weather App</p>
-          <p className="text-xs mt-1">APIs will be provided by user</p>
+          <p>© {new Date().getFullYear()} WeatherVue - Real-time Weather Dashboard</p>
+          <p className="text-xs mt-1">Powered by WeatherAPI | Built with React & TypeScript</p>
         </div>
       </footer>
     </div>
