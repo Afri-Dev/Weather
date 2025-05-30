@@ -70,6 +70,17 @@ src/
 └── styles/         # Global styles and Tailwind configuration
 ```
 
+## Screenshots
+
+### Main Weather View
+![Main Weather View](/screenshots/Screenshot%202025-05-30%20233537.png)
+
+### Forecast View
+![Forecast View](/screenshots/Screenshot%202025-05-30%20233555.png)
+
+### Location Search
+![Location Search](/screenshots/Screenshot%202025-05-30%20233605.png)
+
 ## Getting Started
 
 1. Clone the repository
