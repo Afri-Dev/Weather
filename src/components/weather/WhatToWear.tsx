@@ -46,7 +46,7 @@ const itemVariants = {
 };
 
 const WhatToWear: React.FC<WhatToWearProps> = ({ weatherData, isLoading }) => {
-  const [activeTab, setActiveTab] = useState<'casual' | 'formal'>('casual');
+  const [activeTab, setActiveTab] = useState<'casual' | 'formal' | 'gym'>('casual');
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -87,33 +87,178 @@ const WhatToWear: React.FC<WhatToWearProps> = ({ weatherData, isLoading }) => {
   const { current } = weatherData;
   const tempC = current.temp_c;
   
-  // Determine clothing suggestions based on temperature
+  // Determine clothing suggestions based on temperature and category
   const getClothingSuggestion = (gender: 'male' | 'female'): ClothingSuggestion => {
+    // Gym outfit
+    if (activeTab === 'gym') {
+      if (tempC >= 25) {
+        return gender === 'male'
+          ? { 
+              top: 'Moisture-wicking tank top or sleeveless shirt', 
+              bottom: 'Athletic shorts with built-in liner', 
+              footwear: 'Breathable running shoes', 
+              accessories: ['Sweat-wicking headband', 'Water bottle', 'Sunscreen'] 
+            }
+          : { 
+              top: 'Sports bra with racerback tank', 
+              bottom: 'High-waisted athletic shorts or capris', 
+              footwear: 'Running shoes with good arch support', 
+              accessories: ['Hair tie', 'Water bottle', 'Sunscreen'] 
+            };
+      } else if (tempC >= 15) {
+        return gender === 'male'
+          ? { 
+              top: 'Moisture-wicking t-shirt', 
+              bottom: 'Training shorts or joggers', 
+              footwear: 'Cross-training shoes', 
+              accessories: ['Gym towel', 'Water bottle'] 
+            }
+          : { 
+              top: 'Sports bra with fitted t-shirt', 
+              bottom: 'Leggings or training shorts', 
+              footwear: 'Cross-training shoes', 
+              accessories: ['Hair tie', 'Water bottle'] 
+            };
+      } else {
+        return gender === 'male'
+          ? { 
+              top: 'Moisture-wicking long-sleeve base layer', 
+              bottom: 'Athletic pants with side vents', 
+              footwear: 'Indoor training shoes', 
+              accessories: ['Training gloves', 'Water bottle'] 
+            }
+          : { 
+              top: 'Long-sleeve performance top with thumbholes', 
+              bottom: 'Full-length leggings', 
+              footwear: 'Indoor training shoes', 
+              accessories: ['Headband', 'Water bottle'] 
+            };
+      }
+    }
+
+    // Formal outfit
+    if (activeTab === 'formal') {
+      if (tempC >= 25) {
+        return gender === 'male'
+          ? { 
+              top: 'Lightweight cotton or linen dress shirt (tie optional)', 
+              bottom: 'Light-colored dress pants', 
+              footwear: 'Loafers or dressy sandals', 
+              accessories: ['Sunglasses', 'Straw panama hat'] 
+            }
+          : { 
+              top: 'Sleeveless silk blouse', 
+              bottom: 'Linen or chiffon dress or skirt suit', 
+              footwear: 'Strappy sandals or pumps', 
+              accessories: ['Wide-brimmed hat', 'Sunglasses'] 
+            };
+      } else if (tempC >= 15) {
+        return gender === 'male'
+          ? { 
+              top: 'Dress shirt with tie', 
+              bottom: 'Wool or wool-blend suit pants', 
+              footwear: 'Oxfords or derby shoes', 
+              accessories: ['Dress watch', 'Leather belt', 'Light blazer'] 
+            }
+          : { 
+              top: 'Silk blouse with statement necklace', 
+              bottom: 'Pencil skirt or tailored pants', 
+              footwear: 'Pumps or loafers', 
+              accessories: ['Structured handbag', 'Watch'] 
+            };
+      } else {
+        return gender === 'male'
+          ? { 
+              top: 'Dress shirt with wool sweater vest', 
+              bottom: 'Tailored wool dress pants', 
+              footwear: 'Leather dress shoes', 
+              accessories: ['Topcoat', 'Wool scarf', 'Leather gloves'] 
+            }
+          : { 
+              top: 'Silk blouse with structured blazer', 
+              bottom: 'Wool trousers or midi skirt with tights', 
+              footwear: 'Knee-high boots or pumps', 
+              accessories: ['Wool coat', 'Cashmere wrap', 'Leather gloves'] 
+            };
+      }
+    }
+
+    // Casual outfit (default)
     if (tempC >= 30) {
       // Hot weather
       return gender === 'male' 
-        ? { top: 'Light t-shirt or tank top', bottom: 'Shorts', footwear: 'Sandals', accessories: ['Sunglasses', 'Sun hat'] }
-        : { top: 'Tank top or sundress', bottom: 'Shorts or skirt', footwear: 'Sandals', accessories: ['Sunglasses', 'Sun hat'] };
+        ? { 
+            top: 'Linen or cotton short-sleeve shirt', 
+            bottom: 'Lightweight chino shorts', 
+            footwear: 'Leather sandals or canvas sneakers', 
+            accessories: ['Aviator sunglasses', 'Baseball cap', 'Water bottle'] 
+          }
+        : { 
+            top: 'Flowy tank top or sundress', 
+            bottom: 'Denim shorts or midi skirt', 
+            footwear: 'Strappy sandals or wedges', 
+            accessories: ['Oversized sunglasses', 'Wide-brim hat', 'Tote bag'] 
+          };
     } else if (tempC >= 20) {
       // Warm weather
       return gender === 'male'
-        ? { top: 'T-shirt or polo', bottom: 'Chinos or jeans', footwear: 'Sneakers', accessories: ['Sunglasses'] }
-        : { top: 'Blouse or t-shirt', bottom: 'Jeans or skirt', footwear: 'Sandals or sneakers', accessories: ['Sunglasses'] };
+        ? { 
+            top: 'Polo shirt or casual button-down', 
+            bottom: 'Chinos or dark jeans', 
+            footwear: 'Canvas sneakers or boat shoes', 
+            accessories: ['Casual watch', 'Lightweight bomber jacket'] 
+          }
+        : { 
+            top: 'Off-shoulder top or blouse', 
+            bottom: 'Mom jeans or midi skirt', 
+            footwear: 'Ballet flats or ankle boots', 
+            accessories: ['Crossbody bag', 'Dainty jewelry'] 
+          };
     } else if (tempC >= 10) {
       // Cool weather
       return gender === 'male'
-        ? { top: 'Long-sleeve shirt', bottom: 'Jeans or chinos', footwear: 'Sneakers or boots', accessories: ['Light jacket'] }
-        : { top: 'Sweater or long-sleeve top', bottom: 'Jeans or pants', footwear: 'Boots or sneakers', accessories: ['Light jacket'] };
+        ? { 
+            top: 'Flannel shirt over t-shirt or henley', 
+            bottom: 'Dark jeans or chinos', 
+            footwear: 'Leather boots or sneakers', 
+            accessories: ['Denim or field jacket', 'Beanie'] 
+          }
+        : { 
+            top: 'Turtleneck or chunky sweater', 
+            bottom: 'High-waisted jeans with tights', 
+            footwear: 'Ankle boots or booties', 
+            accessories: ['Trench coat', 'Blanket scarf'] 
+          };
     } else if (tempC >= 0) {
       // Cold weather
       return gender === 'male'
-        ? { top: 'Thermal top + sweater', bottom: 'Thermal leggings + jeans', footwear: 'Boots', accessories: ['Winter coat', 'Gloves', 'Beanie'] }
-        : { top: 'Thermal top + sweater', bottom: 'Thermal leggings + pants', footwear: 'Boots', accessories: ['Winter coat', 'Gloves', 'Beanie'] };
+        ? { 
+            top: 'Thermal henley + sweater + insulated jacket', 
+            bottom: 'Thermal base layer + jeans or chinos', 
+            footwear: 'Waterproof winter boots', 
+            accessories: ['Puffer jacket', 'Beanie', 'Touchscreen gloves'] 
+          }
+        : { 
+            top: 'Turtleneck + cashmere sweater', 
+            bottom: 'Fleece-lined leggings + wool skirt', 
+            footwear: 'Shearling-lined boots', 
+            accessories: ['Puffer coat', 'Knit headband', 'Leather gloves'] 
+          };
     } else {
       // Freezing weather
       return gender === 'male'
-        ? { top: 'Thermal top + sweater + heavy coat', bottom: 'Thermal leggings + insulated pants', footwear: 'Insulated boots', accessories: ['Heavy winter coat', 'Gloves', 'Scarf', 'Winter hat'] }
-        : { top: 'Thermal top + sweater + heavy coat', bottom: 'Thermal leggings + insulated pants', footwear: 'Insulated boots', accessories: ['Heavy winter coat', 'Gloves', 'Scarf', 'Winter hat'] };
+        ? { 
+            top: 'Thermal base layer + flannel shirt + down vest + parka', 
+            bottom: 'Thermal base layer + insulated pants', 
+            footwear: 'Insulated winter boots', 
+            accessories: ['Heavy parka', 'Balaclava', 'Insulated gloves'] 
+          }
+        : { 
+            top: 'Thermal base layer + cashmere sweater + down vest', 
+            bottom: 'Thermal tights + quilted skirt', 
+            footwear: 'Fur-lined boots', 
+            accessories: ['Down coat', 'Cashmere wrap', 'Touchscreen gloves'] 
+          };
     }
   };
 
@@ -245,26 +390,24 @@ const WhatToWear: React.FC<WhatToWearProps> = ({ weatherData, isLoading }) => {
           </p>
         </div>
         
-        <div className="flex space-x-2 bg-white/10 dark:bg-gray-700/20 p-1 rounded-lg">
+        <div className="flex space-x-2 mb-6 bg-white/10 dark:bg-gray-800/20 p-1 rounded-xl">
           <button
             onClick={() => setActiveTab('casual')}
-            className={`px-4 py-1.5 text-sm rounded-md transition-colors ${
-              activeTab === 'casual' 
-                ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm' 
-                : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
-            }`}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'casual' ? 'bg-white text-blue-600 dark:bg-gray-700 dark:text-white' : 'text-gray-600 hover:bg-white/5 dark:text-gray-300 dark:hover:bg-gray-700/50'}`}
           >
             Casual
           </button>
           <button
             onClick={() => setActiveTab('formal')}
-            className={`px-4 py-1.5 text-sm rounded-md transition-colors ${
-              activeTab === 'formal' 
-                ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm' 
-                : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
-            }`}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'formal' ? 'bg-white text-blue-600 dark:bg-gray-700 dark:text-white' : 'text-gray-600 hover:bg-white/5 dark:text-gray-300 dark:hover:bg-gray-700/50'}`}
           >
             Formal
+          </button>
+          <button
+            onClick={() => setActiveTab('gym')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'gym' ? 'bg-white text-blue-600 dark:bg-gray-700 dark:text-white' : 'text-gray-600 hover:bg-white/5 dark:text-gray-300 dark:hover:bg-gray-700/50'}`}
+          >
+            Gym
           </button>
         </div>
       </div>
@@ -278,21 +421,9 @@ const WhatToWear: React.FC<WhatToWearProps> = ({ weatherData, isLoading }) => {
           transition={{ duration: 0.3 }}
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
-          {renderOutfitCard(activeTab === 'casual' ? maleOutfit : {
-            ...maleOutfit,
-            top: `Formal ${maleOutfit.top.includes('shirt') ? 'shirt' : maleOutfit.top}`,
-            bottom: maleOutfit.bottom.includes('pants') ? 'Dress pants' : 'Skirt or dress pants',
-            footwear: 'Dress shoes',
-            accessories: [...(maleOutfit.accessories || []), 'Watch', 'Belt']
-          }, 'male')}
+          {renderOutfitCard(maleOutfit, 'male')}
           
-          {renderOutfitCard(activeTab === 'casual' ? femaleOutfit : {
-            ...femaleOutfit,
-            top: `Blouse or ${femaleOutfit.top}`,
-            bottom: femaleOutfit.bottom.includes('pants') ? 'Dress pants or skirt' : 'Dress or skirt',
-            footwear: 'Heels or dress shoes',
-            accessories: [...(femaleOutfit.accessories || []), 'Jewelry', 'Clutch']
-          }, 'female')}
+          {renderOutfitCard(femaleOutfit, 'female')}
         </motion.div>
       </AnimatePresence>
       
