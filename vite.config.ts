@@ -14,6 +14,9 @@ export default defineConfig({
     outDir: "dist",
     sourcemap: true,
     rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'src/main.tsx')
+      },
       output: {
         manualChunks: {
           react: ['react', 'react-dom'],
